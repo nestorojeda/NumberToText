@@ -2,19 +2,20 @@ public class NumberToText {
 
     public String convert(int number){
         if(number == 0) return "zero";
-
         else if(number > 19 && number < 100){
-            if (isMultipleOfTen(number)) return twoDigitAndGreaterThanTenConverter(number);
+            if (isMultipleOfTen(number)){
+                return twoDigitAndGreaterThanTenConverter(number);
+            }
             return twoDigitAndGreaterThanTenConverter(takeMultipleOfTen(number)) + "-" + specialNumberConverter(number - takeMultipleOfTen(number));
-        }
-        else if(number > 99 && number < 1000){
+        } else if(number > 99 && number < 1000){
             return threeDigitConverter(number);
+        } else if (number > 999 && number < 1000000){
+            return fourDigitConverter(number);
+        }else if(number>999999 && number < 1000000000) {
+            return fiveDigitConverter(number);
         }
         return specialNumberConverter(number);
     }
-
-    //number % 1
-    //numero compuesto = multilpleOfTenConverter(num') + specialNumberConverter(number%num')
 
     private String specialNumberConverter(int number) {
 
@@ -42,7 +43,7 @@ public class NumberToText {
     }
 
     private String twoDigitAndGreaterThanTenConverter(int number){
-        
+
         if(number == 20) return "twenty";
         if(number == 30) return "thirty";
         if(number == 40) return "forty";
@@ -63,12 +64,29 @@ public class NumberToText {
 
     }
 
-    private boolean isMultipleOfTen(int number){
-        return (number % 10 == 0 ) && (number > 10);
+
+    private String fourDigitConverter(int number){
+
+        int thousands = number / 1000;
+        int left = number - thousands*1000;
+
+        if (left == 0) return specialNumberConverter(thousands) + " thousand";
+        else return convert(thousands) + " thousand and " + convert(left);
+
     }
 
-    private boolean isSpecialNumber(int number){
-        return number < 20;
+    private String fiveDigitConverter(int number){
+
+        int millions = number / 1000000;
+        int left = number - millions*1000000;
+
+        if (left == 0) return specialNumberConverter(millions) + " million";
+        else return convert(millions) + " million and " + convert(left);
+
+    }
+
+    private boolean isMultipleOfTen(int number){
+        return (number % 10 == 0 ) && (number > 10);
     }
 
     private int takeMultipleOfTen(int num){

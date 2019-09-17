@@ -86,7 +86,14 @@ public class TestNumberToText {
         assertThat((new NumberToText().convert(110))).isEqualTo("one hundred and ten");
     }
 
+    @Test
     public void given_999_should_return_nine_hundred_and_ninety_nine() {
-        assertThat((new NumberToText().convert(110))).isEqualTo("nine hundred and ninety-nine");
+        assertThat((new NumberToText().convert(999))).isEqualTo("nine hundred and ninety-nine");
     }
+
+    @Test
+    public void given_1000_should_return_a_thousand() {
+        assertThat((new NumberToText().convert(1000))).isEqualTo("one thousand");
+    }
+
 }
